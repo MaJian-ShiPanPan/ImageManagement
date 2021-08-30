@@ -83,6 +83,8 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../../CNSI/bin/</OutDir>
     <IntDir>../../CNSI/bin/temp/XCNImageManagement/</IntDir>
+    <IncludePath>C:\Program Files\PostgreSQL\13\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\PostgreSQL\13\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
