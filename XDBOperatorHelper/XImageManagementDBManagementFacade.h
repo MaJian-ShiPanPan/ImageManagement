@@ -16,6 +16,8 @@ public:
 	int Initialization();
 	int Finalization();
 	PGconn* DBConnection() override;
+	bool InsertSingleImage(std::string imagePath, int storeType, std::string storeData) override;
+
 private:
 	CXImageManagementDBManagement* m_pXImageManagementDBManagement;
 };

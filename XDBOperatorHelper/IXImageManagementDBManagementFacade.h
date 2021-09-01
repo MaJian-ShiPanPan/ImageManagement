@@ -10,5 +10,6 @@ public:
 	virtual ~IXImageManagementDBManagementFacade() = default;
 
 	virtual PGconn* DBConnection() = 0;
+	virtual bool InsertSingleImage(std::string imagePath, int storeType, std::string storeData) = 0;
 };
 #endif

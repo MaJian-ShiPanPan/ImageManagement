@@ -1,3 +1,4 @@
+#include <string>
 #include "XImageManagementDBManagementFacade.h"
 #include "XImageManagementDBManagement.h"
 
@@ -26,4 +27,9 @@ int CXImageManagementDBManagementFacade::Finalization()
 PGconn* CXImageManagementDBManagementFacade::DBConnection()
 {
 	return m_pXImageManagementDBManagement->GetDBConn();
+}
+
+bool CXImageManagementDBManagementFacade::InsertSingleImage(std::string imagePath, int storeType, std::string storeData)
+{
+	return m_pXImageManagementDBManagement->InsertSingleImage(imagePath, storeType, storeData);
 }

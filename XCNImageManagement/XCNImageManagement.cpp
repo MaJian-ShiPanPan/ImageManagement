@@ -14,13 +14,19 @@ CXCNImageManagement::~CXCNImageManagement()
 
 int CXCNImageManagement::Initialize()
 {
-	CXImageManagementDBManagementFactory* pDBManagementFactory = new CXImageManagementDBManagementFactory();
-	std::shared_ptr<IXImageManagementDBManagementFacade> pDBManagement = pDBManagementFactory->CreateDBManagement();
-	this->DBconn = pDBManagement->DBConnection();
+	m_pDBManagementFactory = new CXImageManagementDBManagementFactory();
+	m_pDBManagement = m_pDBManagementFactory->CreateDBManagement();
+	this->DBconn = m_pDBManagement->DBConnection();
 	return 0;
 }
 
 int CXCNImageManagement::finalization()
 {
+	return 0;
+}
+
+int CXCNImageManagement::DelLay()
+{
+	m_pDBManagement->InsertSingleImage("\'ASB//SB\'", 1, "\'2001-07-13\'");
 	return 0;
 }
