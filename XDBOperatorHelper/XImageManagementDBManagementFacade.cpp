@@ -3,12 +3,12 @@
 
 CXImageManagementDBManagementFacade::CXImageManagementDBManagementFacade()
 {
-
+	this->Initialization();
 }
 
 CXImageManagementDBManagementFacade::~CXImageManagementDBManagementFacade()
 {
-
+	this->Finalization();
 }
 
 int CXImageManagementDBManagementFacade::Initialization()
@@ -23,7 +23,7 @@ int CXImageManagementDBManagementFacade::Finalization()
 	return 0;
 }
 
-int CXImageManagementDBManagementFacade::DBConnection()
+PGconn* CXImageManagementDBManagementFacade::DBConnection()
 {
-	return 0;
+	return m_pXImageManagementDBManagement->GetDBConn();
 }

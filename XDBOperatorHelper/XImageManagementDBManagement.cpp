@@ -15,5 +15,9 @@ int CXImageManagementDBManagement::DBConnection()
 		std::cout << PQerrorMessage(conn) << std::endl; // 打印连接错误信息
 		PQfinish(conn); // 结束链接
 	}
+	else
+	{
+		std::cout << "success" << std::endl; // 打印成功信息
+	}
 	return 0;
 }

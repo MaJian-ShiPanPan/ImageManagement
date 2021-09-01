@@ -1,8 +1,10 @@
 #include <iostream>
+#include "XCNImageManagement.h"
 
 int main()
 {
 	std::cout << "Hello World" << std::endl;
-	std::cout << "nihao" << std::endl;
+	CXCNImageManagement* CNImageManagement = new CXCNImageManagement();
+
 	return EXIT_SUCCESS;
 }

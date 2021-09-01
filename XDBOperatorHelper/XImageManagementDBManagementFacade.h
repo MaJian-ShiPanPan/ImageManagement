@@ -1,6 +1,7 @@
 #ifndef XDBOPERATORHELPER_XIMAGEMANAGEMENTDBMANAGEMENTFACADE_H
 #define XDBOPERATORHELPER_XIMAGEMANAGEMENTDBMANAGEMENTFACADE_H
 
+#include <libpq-fe.h>
 #include "IXImageManagementDBManagementFacade.h"
 
 class CXImageManagementDBManagement;
@@ -14,7 +15,7 @@ public:
 
 	int Initialization();
 	int Finalization();
-	int DBConnection() override;
+	PGconn* DBConnection() override;
 private:
 	CXImageManagementDBManagement* m_pXImageManagementDBManagement;
 };
