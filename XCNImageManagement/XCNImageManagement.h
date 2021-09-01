@@ -16,7 +16,7 @@ class CXCNImageManagement
 public:
 	CXCNImageManagement();
 	~CXCNImageManagement();
-	
+
 	int Initialize();
 	int finalization();
 

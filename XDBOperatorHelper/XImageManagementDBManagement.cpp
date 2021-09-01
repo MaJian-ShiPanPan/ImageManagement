@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include "XImageManagementDBManagement.h"
 
 PGconn* CXImageManagementDBManagement::GetDBConn()
@@ -7,15 +7,36 @@ PGconn* CXImageManagementDBManagement::GetDBConn()
 	return conn;
 }
 
-std::string CXImageManagementDBManagement::GetSingImage()
+bool CXImageManagementDBManagement::GetPicPathAccordPicName(std::string& imageName, std::vector<std::string>& vecImagePath)
 {
-	
-	return "123";
+	std::string sqlStr = "SELECT image_path FROM \"PicAddrMapTab\" WHERE image_name LIKE " + imageName;
+	std::cout << sqlStr << std::endl;
+
+	char* cSql = const_cast<char*>(sqlStr.c_str());
+
+	PGresult* res = PQexec(conn, cSql);
+	if (PGRES_TUPLES_OK != PQresultStatus(res))
+	{
+		std::cout << PQresultErrorMessage(res) << std::endl;
+		PQclear(res);
+		return false;
+	}
+	else
+	{
+		for (int i = 0; i < PQntuples(res); i++)
+		{
+			for (int j = 0; j < PQnfields(res); j++)
+			{
+				vecImagePath.push_back(PQgetvalue(res, i, j));
+			}
+		}
+	}
+	return true;
 }
 
-bool CXImageManagementDBManagement::InsertSingleImage(std::string imagePath, int storeType, std::string storeData)
+bool CXImageManagementDBManagement::InsertSingleImage(std::string imageName, std::string imagePath, int storeType, std::string storeData)
 {
-	std::string sqlStr = "INSERT INTO PicAddrMapTab (ImagePath, StoreType, StoreData) VALUES (" + imagePath + ", " + std::to_string(storeType) + ", " + storeData + ");";
+	std::string sqlStr = "INSERT INTO \"PicAddrMapTab\" (image_name, image_path, store_type, store_data) VALUES (" + imageName + ", " + imagePath + ", " + std::to_string(storeType) + ", " + storeData + ");";
 	std::cout << sqlStr << std::endl;
 	char* cSql = const_cast<char*>(sqlStr.c_str());
 
@@ -23,6 +44,7 @@ bool CXImageManagementDBManagement::InsertSingleImage(std::string imagePath, int
 
 	if (PGRES_COMMAND_OK != PQresultStatus(res))
 	{
+		std::cout << PQresultStatus(res) << std::endl;
 		std::cout << PQresultErrorMessage(res) << std::endl;
 		PQclear(res);
 		return true;
@@ -30,18 +52,20 @@ bool CXImageManagementDBManagement::InsertSingleImage(std::string imagePath, int
 	return false;
 }
 
+
+
 int CXImageManagementDBManagement::DBConnection()
 {
 	conn = PQconnectdb("host=127.0.0.1 dbname=ImageManagement user=postgres password=majian port=5432");
-	// conn = PQsetdbLogin("127.0.0.1", "5432", NULL, NULL, "ImageManagement", "postgres", "majian"); // Ò²¿ÉÒÔ²ÉÓÃ¸Ã·½·¨Á´½ÓÊý¾Ý¿â
+	// conn = PQsetdbLogin("127.0.0.1", "5432", NULL, NULL, "ImageManagement", "postgres", "majian"); // ä¹Ÿå¯ä»¥é‡‡ç”¨è¯¥æ–¹æ³•é“¾æŽ¥æ•°æ®åº“
 	if (PQstatus(conn) == CONNECTION_BAD)
 	{
-		std::cout << PQerrorMessage(conn) << std::endl; // ´òÓ¡Á¬½Ó´íÎóÐÅÏ¢
-		PQfinish(conn); // ½áÊøÁ´½Ó
+		std::cout << PQerrorMessage(conn) << std::endl; // æ‰“å°è¿žæŽ¥é”™è¯¯ä¿¡æ¯
+		PQfinish(conn); // ç»“æŸé“¾æŽ¥
 	}
 	else
 	{
-		std::cout << "Á´½ÓÊý¾Ý¿â³É¹¦:" << PQstatus(conn) << std::endl; // ´òÓ¡³É¹¦ÐÅÏ¢
+		std::cout << "é“¾æŽ¥æ•°æ®åº“æˆåŠŸ:" << PQstatus(conn) << std::endl; // æ‰“å°æˆåŠŸä¿¡æ¯
 	}
 	return 0;
 }

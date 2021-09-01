@@ -29,7 +29,13 @@ PGconn* CXImageManagementDBManagementFacade::DBConnection()
 	return m_pXImageManagementDBManagement->GetDBConn();
 }
 
-bool CXImageManagementDBManagementFacade::InsertSingleImage(std::string imagePath, int storeType, std::string storeData)
+bool CXImageManagementDBManagementFacade::InsertSingleImage(std::string imageName, std::string imagePath, int storeType, std::string storeData)
 {
-	return m_pXImageManagementDBManagement->InsertSingleImage(imagePath, storeType, storeData);
+	return m_pXImageManagementDBManagement->InsertSingleImage(imageName, imagePath, storeType, storeData);
+}
+
+bool CXImageManagementDBManagementFacade::GetPicPathAccordPicName(std::string& imageName, std::vector<std::string>& vecImagePath)
+{
+
+	return m_pXImageManagementDBManagement->GetPicPathAccordPicName(imageName, vecImagePath);
 }

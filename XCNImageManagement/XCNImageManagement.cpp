@@ -1,3 +1,5 @@
+#include <vector>
+#include <string>
 #include "XCNImageManagement.h"
 #include "IXImageManagementDBManagementFacade.h"
 #include "XImageManagementDBManagementFactory.h"
@@ -27,6 +29,14 @@ int CXCNImageManagement::finalization()
 
 int CXCNImageManagement::DelLay()
 {
-	m_pDBManagement->InsertSingleImage("\'ASB//SB\'", 1, "\'2001-07-13\'");
+	std::vector<std::string> vecImagePath;
+	// m_pDBManagement->InsertSingleImage("\'majian.png\'", "\'ASB//SB\'", 1, "\'2001-07-13\'");
+	std::string imageName = "\'majian.png\'";
+	m_pDBManagement->GetPicPathAccordPicName(imageName, vecImagePath);
+	for (auto it = vecImagePath.begin(); it != vecImagePath.end(); ++it)
+	{
+		std::cout << *it << "\t";
+	}
+	std::cout << std::endl;
 	return 0;
 }
