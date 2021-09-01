@@ -82,7 +82,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../../CNSI/bin/</OutDir>
-    <IntDir>../../CNSI/bin/temp/XCNImageManagement/</IntDir>
+    <IntDir>../../CNSI/temp/XCNImageManagement/</IntDir>
     <IncludePath>C:\Program Files\PostgreSQL\13\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Program Files\PostgreSQL\13\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

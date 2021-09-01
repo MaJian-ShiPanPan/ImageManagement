@@ -9,7 +9,7 @@ PGconn* CXImageManagementDBManagement::GetDBConn()
 
 int CXImageManagementDBManagement::DBConnection()
 {
-	conn = PQconnectdb("host=127.0.0.1 dbname==ImageManagement user=postgres password=majian");
+	conn = PQconnectdb("host=127.0.0.1 dbname==postgres user=postgres password=majian");
 	if (PQstatus(conn) == CONNECTION_BAD)
 	{
 		std::cout << PQerrorMessage(conn) << std::endl; // 打印连接错误信息
