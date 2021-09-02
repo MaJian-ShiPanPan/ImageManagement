@@ -18,6 +18,7 @@ public:
 	PGconn* DBConnection() override;
 	bool InsertSingleImage(std::string imageName, std::string imagePath, int storeType, std::string storeData) override;
 	bool GetPicPathAccordPicName(std::string& imageName, std::vector<std::string>& vecImagePath) override;
+	bool DeletePicPathAccordPicName(std::string& imageName) override;
 
 private:
 	CXImageManagementDBManagement* m_pXImageManagementDBManagement;

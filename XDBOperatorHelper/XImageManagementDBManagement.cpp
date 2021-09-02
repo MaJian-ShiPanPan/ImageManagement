@@ -9,7 +9,7 @@ PGconn* CXImageManagementDBManagement::GetDBConn()
 
 bool CXImageManagementDBManagement::GetPicPathAccordPicName(std::string& imageName, std::vector<std::string>& vecImagePath)
 {
-	std::string sqlStr = "SELECT image_path FROM \"PicAddrMapTab\" WHERE image_name LIKE " + imageName;
+	std::string sqlStr = "SELECT image_path FROM \"PicAddrMapTab\" WHERE image_name LIKE \'" + imageName + "\'";
 	std::cout << sqlStr << std::endl;
 
 	char* cSql = const_cast<char*>(sqlStr.c_str());
@@ -27,7 +27,7 @@ bool CXImageManagementDBManagement::GetPicPathAccordPicName(std::string& imageNa
 		{
 			for (int j = 0; j < PQnfields(res); j++)
 			{
-				vecImagePath.push_back(PQgetvalue(res, i, j));
+				vecImagePath.push_back(std::string(PQgetvalue(res, i, j)) + "/" + imageName);
 			}
 		}
 	}
@@ -36,7 +36,7 @@ bool CXImageManagementDBManagement::GetPicPathAccordPicName(std::string& imageNa
 
 bool CXImageManagementDBManagement::InsertSingleImage(std::string imageName, std::string imagePath, int storeType, std::string storeData)
 {
-	std::string sqlStr = "INSERT INTO \"PicAddrMapTab\" (image_name, image_path, store_type, store_data) VALUES (" + imageName + ", " + imagePath + ", " + std::to_string(storeType) + ", " + storeData + ");";
+	std::string sqlStr = "INSERT INTO \"PicAddrMapTab\" (image_name, image_path, store_type, store_data) VALUES (\'" + imageName + "\', \'" + imagePath + "\', " + std::to_string(storeType) + ", \'" + storeData + "\');";
 	std::cout << sqlStr << std::endl;
 	char* cSql = const_cast<char*>(sqlStr.c_str());
 
@@ -52,7 +52,24 @@ bool CXImageManagementDBManagement::InsertSingleImage(std::string imageName, std
 	return false;
 }
 
-
+bool CXImageManagementDBManagement::DeletePicPathAccordPicName(std::string& imageName)
+{
+	std::string sqlStr = "DELETE FROM \"PicAddrMapTab\" WHERE image_name LIKE \'" + imageName + "\';";
+	std::cout << sqlStr << std::endl;
+	char* sql = const_cast<char*>(sqlStr.c_str());
+	PGresult* res = PQexec(conn, sql);
+	if (PGRES_COMMAND_OK != PQresultStatus(res))
+	{
+		std::cout << PQresultErrorMessage(res) << std::endl;
+		PQclear(res);
+		return false;
+	}
+	else
+	{
+		std::cout << "delete success!" << std::endl;
+	}
+	return true;
+}
 
 int CXImageManagementDBManagement::DBConnection()
 {

@@ -39,3 +39,8 @@ bool CXImageManagementDBManagementFacade::GetPicPathAccordPicName(std::string& i
 
 	return m_pXImageManagementDBManagement->GetPicPathAccordPicName(imageName, vecImagePath);
 }
+
+bool CXImageManagementDBManagementFacade::DeletePicPathAccordPicName(std::string& imageName)
+{
+	return m_pXImageManagementDBManagement->DeletePicPathAccordPicName(imageName);
+}
